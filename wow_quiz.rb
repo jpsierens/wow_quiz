@@ -1,14 +1,20 @@
 require "./classes.rb"
 
-def evaluate_input(input)
-    # need to turn into array and remove dups
-    answer = input.split.uniq
-        
+def is_correct(answer)      
     if answer.sort != CLASSES.sort
         return false
     end
 
     true
+end
+
+def handle_wrong_answer(answer)
+    partial_answers = answer & CLASSES
+    if partial_answers.any?
+        return "You have the following classes correct: #{partial_answers.join(' ')}. Retype them and the missing ones"
+    end
+
+    return "Wrong, keep trying! or press CTRL+C to finish"
 end
 
 def play()
@@ -23,12 +29,12 @@ def play()
     until is_correct
         puts ">"
         input = $stdin.gets.chomp
-    
-        is_correct = evaluate_input(input)
+        answerArray = input.split.uniq
 
-        if is_correct then return end
-        puts "Wrong, keep trying! or press CTRL+C to finish"
+        if is_correct(answerArray)
+            return puts "Correct!! Thanks for playing"
+        end
+
+        puts handle_wrong_answer(answerArray)
     end
-    
-    puts "Correct!! Thanks for playing"
 end
