@@ -1,0 +1,1 @@
+CLASSES = ['Priest', 'Paladin', 'Monk', 'DemonHunter', 'DeathKnight', 'Shaman', 'Mage', 'Warlock', 'Hunter', 'Rogue', 'Druid']
