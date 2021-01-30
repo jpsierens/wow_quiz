@@ -11,7 +11,7 @@ describe "wow quiz" do
 
     describe "enters something wrong" do
         it "fails the quiz" do
-            expect(evaluate_input 'Bard SpellBreaker Necromancer')
+            expect(evaluate_input 'Bard SpellBreaker Necromancer').to be false
         end
     end
 end
