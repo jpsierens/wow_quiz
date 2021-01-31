@@ -1,5 +1,22 @@
 require "./classes.rb"
 
+def print_instructions
+    puts "lets see how many classes you can name from WoW!!"
+    puts "-------------------------------------------------"
+    puts "Instructions:"
+    puts "Type them in and separate with spaces"
+    puts "If the class has multiple words, unit them like BananaApple (note the uppercases)"
+end
+
+def format_input(input)
+    input.split.map(&:downcase).uniq
+end
+
+def get_input()
+    puts ">"
+    input = $stdin.gets.chomp
+end
+
 def is_correct(answer)      
     if answer.sort != CLASSES.sort
         return false
@@ -18,23 +35,18 @@ def handle_wrong_answer(answer)
 end
 
 def play()
-    puts "lets see how many classes you can name from WoW!!"
-    puts "-------------------------------------------------"
-    puts "Instructions:"
-    puts "Type them in and separate with spaces"
-    puts "If the class has multiple words, unit them like BananaApple (note the uppercases)"
+    print_instructions()
     
-    is_correct = false
+    finished = false
     
-    until is_correct
-        puts ">"
-        input = $stdin.gets.chomp
-        answerArray = input.split.uniq
+    until finished
+        input = get_input()
+        answer = format_input(input)
 
-        if is_correct(answerArray)
+        if is_correct(answer)
             return puts "Correct!! Thanks for playing"
         end
 
-        puts handle_wrong_answer(answerArray)
+        puts handle_wrong_answer(answer)
     end
 end
