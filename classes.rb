@@ -1,1 +1,1 @@
-CLASSES = ['priest', 'paladin', 'monk', 'demon-hunter', 'deathknight', 'shaman', 'mage', 'warlock', 'hunter', 'rogue', 'druid']
+CLASSES = ['priest', 'paladin', 'monk', 'demonhunter', 'deathknight', 'shaman', 'mage', 'warlock', 'hunter', 'rogue', 'druid']

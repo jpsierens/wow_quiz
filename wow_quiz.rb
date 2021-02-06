@@ -17,7 +17,7 @@ def get_input()
     input = $stdin.gets.chomp
 end
 
-def is_correct(answer)      
+def is_correct?(answer)      
     if answer.sort != CLASSES.sort
         return false
     end
@@ -25,28 +25,49 @@ def is_correct(answer)
     true
 end
 
-def handle_wrong_answer(answer)
-    partial_answers = answer & CLASSES
-    if partial_answers.any?
-        return "You have the following classes correct: #{partial_answers.join(' ')}. Retype them and the missing ones"
+def handle_current(input)
+    current_wrong_answers = input.uniq - CLASSES
+    if current_wrong_answers.any?
+        puts "The following classes are wrong: #{current_wrong_answers.join(' ')}"
     end
 
-    return "Wrong, keep trying! or press CTRL+C to finish"
+    current_correct_answers = input.uniq & CLASSES
+    if current_correct_answers.any?
+        puts "The following classes are right: #{current_correct_answers.join(' ')}"
+    end
+end
+
+def handle_total(partial_correct_answers)
+    if partial_correct_answers.any?
+        missing_num = CLASSES.length - partial_correct_answers.length
+        puts "You have the following classes correct: #{partial_correct_answers.join(' ')}. You are missing #{missing_num} classes"
+    end
 end
 
 def play()
-    print_instructions()
-    
+    print_instructions
+    past_answer = []
     finished = false
     
     until finished
-        input = get_input()
-        answer = format_input(input)
+        formatted_input = format_input get_input
+        total_input = (formatted_input + past_answer).uniq
 
-        if is_correct(answer)
+        if formatted_input[0] == 'quit'
+            return puts "Thanks for playing!"
+        end
+
+        if is_correct? total_input
             return puts "Correct!! Thanks for playing"
         end
 
-        puts handle_wrong_answer(answer)
+        handle_current formatted_input
+
+        # get the union of the answer+input with the correct classes
+        partial_correct_answers = total_input.uniq & CLASSES
+        handle_total partial_correct_answers
+
+        puts "Keep typing classes or write 'quit' to finish"
+        past_answer = partial_correct_answers
     end
 end
