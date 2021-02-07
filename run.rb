@@ -1,3 +1,5 @@
-require "./wow_quiz"
+# frozen_string_literal: true
 
-play()
+require './wow_quiz'
+
+play
