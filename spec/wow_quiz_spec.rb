@@ -15,7 +15,7 @@ describe "wow quiz" do
             
             # by expecting a /value/ you are testing that the value you passed is included in the stdout.
             # Passing 'value' fails since it expects the whole stdout output to match
-            expect { play }.to output(/Correct!! Thanks for playing/).to_stdout
+            expect { play }.to output(/Correct!! You guessed all classes! Thanks for playing/).to_stdout
         end
     end
 
@@ -26,7 +26,7 @@ describe "wow quiz" do
             # so if we do have the same word, it will end up with the correct array of classes (e.g. pRiEst => priest)
             input = classes.push("pRiEst").join(" ")
             allow($stdin).to receive(:gets).and_return(input)
-            expect { play }.to output(/Correct!! Thanks for playing/).to_stdout
+            expect { play }.to output(/Correct!! You guessed all classes! Thanks for playing/).to_stdout
         end
     end
 
@@ -44,6 +44,13 @@ describe "wow quiz" do
         it "tells you what is correct and what is wrong" do
             input = "Priest Paladin Bard"
             expected = /The following classes are wrong: bard\nThe following classes are right: priest paladin/
+            allow($stdin).to receive(:gets).and_return(input, 'quit')
+            expect { play }.to output(expected).to_stdout
+        end
+
+        it "gives you a hint for one of the missing classes" do
+            input = "Priest Paladin Bard"
+            expected = /Heres a hint for a missing class:/
             allow($stdin).to receive(:gets).and_return(input, 'quit')
             expect { play }.to output(expected).to_stdout
         end

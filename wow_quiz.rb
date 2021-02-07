@@ -39,8 +39,9 @@ end
 
 def handle_total(partial_correct_answers)
     if partial_correct_answers.any?
-        missing_num = CLASSES.length - partial_correct_answers.length
-        puts "You have the following classes correct: #{partial_correct_answers.join(' ')}. You are missing #{missing_num} classes"
+        missing_classes = CLASSES - partial_correct_answers
+        puts "You have the following classes correct: #{partial_correct_answers.join(' ')}. You are missing #{missing_classes.length} classes"
+        puts "Heres a hint for a missing class: #{CLASS_HINTS[missing_classes[0]]}"
     end
 end
 
@@ -58,7 +59,7 @@ def play()
         end
 
         if is_correct? total_input
-            return puts "Correct!! Thanks for playing"
+            return puts "Correct!! You guessed all classes! Thanks for playing"
         end
 
         handle_current formatted_input
