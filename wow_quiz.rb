@@ -26,10 +26,10 @@ def correct?(answer)
 end
 
 def handle_current(input)
-  current_wrong_answers = input.uniq - CLASSES
+  current_wrong_answers = input - CLASSES
   puts "The following classes are wrong: #{current_wrong_answers.join(' ')}" if current_wrong_answers.any?
 
-  current_correct_answers = input.uniq & CLASSES
+  current_correct_answers = input & CLASSES
   puts "The following classes are right: #{current_correct_answers.join(' ')}" if current_correct_answers.any?
 end
 
@@ -48,9 +48,9 @@ def play
 
   until finished
     formatted_input = format_input input
-    total_input = (formatted_input + past_answer).uniq
-
     return puts 'Thanks for playing!' if formatted_input[0] == 'quit'
+
+    total_input = (formatted_input + past_answer).uniq
 
     return puts 'Correct!! You guessed all classes! Thanks for playing' if correct? total_input
 
